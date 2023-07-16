@@ -6,12 +6,12 @@ const App = () => {
     {
       path: "/",
       element: <HomeLayout />, // shared layout (we must add Outlet to it)
+      errorElement: <Error />,
       children: [
         { index: true, element: <Landing /> }, // path: '/'
         { path: "cocktail", element: <Cocktail /> },
         { path: "newsletters", element: <Newsletters /> },
         { path: "/about", element: <About /> },
-        { path: "/*", element: <Error /> },
 
         // you can have as many nested pages as you want:
         // {
