@@ -10,6 +10,7 @@ const HomeLayout = () => {
       <section className="page">
         <Outlet />
       </section>
+
       {/* <footer style={{ position: "fixed", bottom: "0" }}>footer</footer> */}
     </>
   );

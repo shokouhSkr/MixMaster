@@ -1,17 +1,32 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { About, Error, HomeLayout, Newsletters, Landing, Cocktail } from "./pages";
+import { About, Error, HomeLayout, Newsletters, Landing, Cocktail, SinglePageError } from "./pages";
+import { loader as landingLoader } from "./pages/Landing";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomeLayout />, // shared layout (we must add Outlet to it)
-      errorElement: <Error />,
+      element: <HomeLayout />, // shared layout for children (we must add Outlet to it)
+      errorElement: <Error />, // global error (doesn't include shared layout)
       children: [
-        { index: true, element: <Landing /> }, // path: '/'
-        { path: "cocktail", element: <Cocktail /> },
-        { path: "newsletters", element: <Newsletters /> },
-        { path: "/about", element: <About /> },
+        {
+          index: true, // path: '/'
+          loader: landingLoader,
+          errorElement: <SinglePageError />, // include shared layout
+          element: <Landing />,
+        },
+        {
+          path: "cocktail",
+          element: <Cocktail />,
+        },
+        {
+          path: "newsletters",
+          element: <Newsletters />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
 
         // you can have as many nested pages as you want:
         // {
