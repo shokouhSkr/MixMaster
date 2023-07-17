@@ -16,7 +16,7 @@ const App = () => {
           element: <Landing />,
         },
         {
-          path: "cocktail",
+          path: "cocktail/:id", // dynamic pages
           element: <Cocktail />,
         },
         {

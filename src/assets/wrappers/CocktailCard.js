@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 const Wrapper = styled.article`
   background: var(--white);
   box-shadow: var(--shadow-2);
@@ -26,6 +26,9 @@ const Wrapper = styled.article`
     p {
       margin-bottom: 1rem;
       color: var(--grey-500);
+    }
+    a {
+      border-radius: var(--roundedBtn);
     }
   }
 `;
