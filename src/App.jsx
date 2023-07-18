@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { About, Error, HomeLayout, Newsletters, Landing, Cocktail, SinglePageError } from "./pages";
 import { loader as landingLoader } from "./pages/Landing";
+import { loader as singleCocktailLoader } from "./pages/Cocktail";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -11,12 +12,14 @@ const App = () => {
       children: [
         {
           index: true, // path: '/'
-          loader: landingLoader,
+          loader: landingLoader, // for getting data
           errorElement: <SinglePageError />, // include shared layout
           element: <Landing />,
         },
         {
           path: "cocktail/:id", // dynamic pages
+          loader: singleCocktailLoader,
+          errorElement: <SinglePageError />,
           element: <Cocktail />,
         },
         {
