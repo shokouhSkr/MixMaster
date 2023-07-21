@@ -1,7 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { About, Error, HomeLayout, Newsletters, Landing, Cocktail, SinglePageError } from "./pages";
+
 import { loader as landingLoader } from "./pages/Landing";
 import { loader as singleCocktailLoader } from "./pages/Cocktail";
+
+import { action as newsletterAction } from "./pages/Newsletters";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -12,7 +15,7 @@ const App = () => {
       children: [
         {
           index: true, // path: '/'
-          loader: landingLoader, // for getting data
+          loader: landingLoader, // for fetching data
           errorElement: <SinglePageError />, // include shared layout
           element: <Landing />,
         },
@@ -25,6 +28,7 @@ const App = () => {
         {
           path: "newsletters",
           element: <Newsletters />,
+          action: newsletterAction, // submit form
         },
         {
           path: "/about",
