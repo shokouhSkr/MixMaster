@@ -2,25 +2,39 @@ import React from "react";
 import { Link, Navigate, useLoaderData, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import Wrapper from "../assets/wrappers/CocktailPage";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 const singleCocktailUrl = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 
-// for loading data (instead of using useState and useEffect)
-export const loader = async ({ params }) => {
-  const { id } = params; // "id" because of /cocktail/:id
-
-  const { data } = await axios.get(`${singleCocktailUrl}${id}`);
-  console.log("id: ", id); // id from URL
-
-  return { id, data };
+const singleCocktailQuery = (id) => {
+  return {
+    queryKey: ["cocktail", id],
+    queryFn: async () => {
+      const { data } = await axios.get(`${singleCocktailUrl}${id}`);
+      return data;
+    },
+  };
 };
+
+// for loading data (instead of using useState and useEffect)
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const { id } = params; // "id" because of /cocktail/:id
+    console.log("id: ", id); // id from URL
+
+    await queryClient.ensureQueryData(singleCocktailQuery(id));
+
+    return { id };
+  };
 
 const Cocktail = () => {
   // we set context on <Outlet/> in HomeLayout and get access to value here:
   // const data = useOutletContext();
   // console.log("data from useOutletContext: ", data.value);
 
-  const { id, data } = useLoaderData();
+  const { id } = useLoaderData();
+  const { data } = useQuery(singleCocktailQuery(id));
 
   // if (!data) return <h2>something went wrong...</h2>;
   if (!data) return <Navigate to="/" />;
